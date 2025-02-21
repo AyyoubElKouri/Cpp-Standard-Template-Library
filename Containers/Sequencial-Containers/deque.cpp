@@ -1,60 +1,97 @@
 #include <iostream>
 #include <deque>
+#include <algorithm>
 
-// Header bar : #include <deque>
-// deque is a double-ended queue, which means that it can be used to store elements in both directions.
-// It is a sequence container, which means that it stores elements in a sequence of contiguous memory locations.
-// It is implemented as a dynamic array, which means that the size of the deque can change at runtime.
-// It is a sequence container, which means that it stores elements in a sequence of contiguous memory locations.
+/**
+ * C++ Standard Library - std::deque (Double-Ended Queue)
+ * -------------------------------------------------
+ * - std::deque is a **sequence container** that allows **fast insertions and deletions** at both ends.
+ * - Unlike std::vector, it does not store elements contiguously but in **multiple memory blocks**.
+ * - Provides **constant time** push/pop at both front and back.
+ * - Supports **random access** like a vector but with slightly worse cache performance.
+ */
 
-// In memory : 
+int main() {
+    // Creating an empty deque of integers
+    std::deque<int> myDeque;
 
-// | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
-// when you add a new element to the deque (ex : 99) : 
-// | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 99 |
+    // Initializing a deque using an initializer list
+    std::deque<int> myDeque2 {1, 4, 3, 6, 2};
 
+    // Initializing a deque using iterators from another deque
+    std::deque<int> myDeque3(myDeque2.begin(), myDeque2.end());
 
+    // Copying a deque using the copy constructor
+    std::deque<int> myDeque4(myDeque3);
 
-int main()
-{
-    // Declaring a deque for integers
-    std::deque<int> deque;
+    // Assigning one deque to another
+    std::deque<int> myDeque5;
+    myDeque5 = myDeque4;
 
-    // Declaring a deque and initializing it using initializer list
-    std::deque<int> deque2 { 1, 4, 3, 6, 2};
+    // Adding elements to the front and back
+    myDeque.push_back(10); // Adds 10 at the end
+    myDeque.push_front(5); // Adds 5 at the beginning
+    myDeque.push_back(15); // Adds 15 at the end
 
-    // Declaring a deque and initializing it using iterators
-    std::deque<int> deque3 (deque2.begin(), deque2.end());
-
-    // Declaring a deque and initializing it using copy constructor
-    std::deque<int> deque4 (deque3);
-
-    // Declaring a deque and initializing it using assignment operator
-    std::deque<int> deque5;
-    deque5 = deque4;
-
-    // Inserting an element at the end of the deque
-    deque.push_back(5); // new deque contains 5
-
-    // Inserting an element at a specific position in the deque
-    deque.insert(deque.begin() + 1, 10); // new deque contains 5, 10
-
-    // Removing an element from the deque
-    deque.erase(deque.begin() + 1); // new deque contains 5
-
-    // Accessing an element in the deque
-    std::cout << deque[0] << std::endl; // prints 5
-
-    // Modifying an element in the deque
-    deque[0] = 10; // new deque contains 10
-
-    // Iterating over the deque
-    for (std::deque<int>::iterator it = deque.begin(); it != deque.end(); ++it)
-    {
-        std::cout << *it << " ";
+    // Printing the deque elements
+    std::cout << "Deque elements: ";
+    for (int value : myDeque) {
+        std::cout << value << " ";
     }
     std::cout << std::endl;
 
+    // Removing elements from the front and back
+    myDeque.pop_back(); // Removes last element
+    myDeque.pop_front(); // Removes first element
+
+    // Printing the modified deque
+    std::cout << "After pop operations: ";
+    for (int value : myDeque) {
+        std::cout << value << " ";
+    }
+    std::cout << std::endl;
+
+    // Inserting an element at a specific position
+    auto it = myDeque.begin() + 1; // Move iterator to second position
+    myDeque.insert(it, 20); // Inserts 20 before the second element
+
+    // Printing the deque after insertion
+    std::cout << "After insertion: ";
+    for (int value : myDeque) {
+        std::cout << value << " ";
+    }
+    std::cout << std::endl;
+
+    // Erasing an element from the deque
+    it = myDeque.begin() + 1; // Move iterator to second position
+    myDeque.erase(it); // Remove element at the second position
+
+    // Printing the deque after deletion
+    std::cout << "After deletion: ";
+    for (int value : myDeque) {
+        std::cout << value << " ";
+    }
+    std::cout << std::endl;
+
+    // Accessing the first and last elements
+    std::cout << "First element: " << myDeque.front() << std::endl;
+    std::cout << "Last element: " << myDeque.back() << std::endl;
+
+    // Sorting the deque
+    std::sort(myDeque.begin(), myDeque.end());
+    std::cout << "Sorted deque: ";
+    for (int value : myDeque) {
+        std::cout << value << " ";
+    }
+    std::cout << std::endl;
+
+    // Reversing the deque
+    std::reverse(myDeque.begin(), myDeque.end());
+    std::cout << "Reversed deque: ";
+    for (int value : myDeque) {
+        std::cout << value << " ";
+    }
+    std::cout << std::endl;
 
     return 0;
 }
